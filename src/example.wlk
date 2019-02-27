@@ -46,8 +46,8 @@ object conejoDeChocolate {
 		return true
 	}
 	
-	method calorias(p){
-		return p*10
+	method calorias(){
+		return peso*10
 	}
 	
 	method darPeso(p){
@@ -56,7 +56,7 @@ object conejoDeChocolate {
 	
 }
 
-object huevitoBlister{
+object huevitoBlister {
 	var cantidadDeHuevos = 0
 	method tieneChocolateConLeche(){
 		return true
@@ -67,7 +67,7 @@ object huevitoBlister{
 	}
 	
 	method calorias(){
-		return 100*cantidadDeHuevos+ cantidadDeHuevos / 5 * 150
+		return 100*cantidadDeHuevos+ (cantidadDeHuevos / 5).truncate(0) * 150
 	}
 	
 	method tieneChocolateBlanco(){
@@ -80,3 +80,72 @@ object huevitoBlister{
 }
 
 
+
+
+object arbol {
+	method calorias(){
+		return 150
+	}
+	
+	
+}
+
+object flor {
+	var petalos = 0
+	
+	method darPetalo(p){
+		petalos = p
+	}
+	
+	method calorias(){
+		return 100*petalos
+	}
+}
+
+object matrioshka {
+	var caloriasBase = 3000
+	var decoracion = flor
+	var huevoInterior = huevitoBlister
+	method tieneChocolateAmargo(){
+		return true
+	}
+	
+	method tieneChocolateConLeche(){
+		return true
+	}
+	
+	method tieneChocolateBlanco(){
+		return false
+	}
+	
+	method cambiarDecoracion(d){
+		decoracion = d
+	}
+	
+	method cambiarHuevo(h){
+		huevoInterior = h
+	}
+	
+	method calorias(){
+		
+		return caloriasBase+huevoInterior.calorias()+decoracion.calorias()
+	}
+}
+
+object ana{
+	method leGusta(huevo){
+		return not (huevo.tieneChocolateAmargo())
+	}
+}
+
+object jose{
+	method leGusta(huevo){
+		return huevo.tieneChocolateBlanco()and huevo.calorias()<400
+	}
+}
+
+object tito{
+	method leGusta(huevo){
+		return true
+	}
+}
