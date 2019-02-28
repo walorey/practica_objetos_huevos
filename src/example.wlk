@@ -133,19 +133,83 @@ object matrioshka {
 }
 
 object ana{
+	
+	var calorias = 0
+	
+	var huevosComidos = []
+	
 	method leGusta(huevo){
 		return not (huevo.tieneChocolateAmargo())
+	}
+	
+	method comer(huevo){
+		calorias = huevo.calorias()
+		huevosComidos.add(huevo)
+	}
+	
+	method estaEnfermo(){
+		var huevosChocolateBlanco = []
+		huevosChocolateBlanco = huevosComidos.filter({h=>h.tieneChocolateBlanco()})
+		return calorias > 5000 || huevosChocolateBlanco.size()>0
 	}
 }
 
 object jose{
+	
+	var huevosComidos = []
+	
 	method leGusta(huevo){
 		return huevo.tieneChocolateBlanco()and huevo.calorias()<400
+	}
+	
+	method comer(huevo){
+		huevosComidos.add(huevo)
+	}
+	
+	method estaEnfermo(){
+		return huevosComidos.last().tieneChocolateAmargo()
 	}
 }
 
 object tito{
+	
+	
 	method leGusta(huevo){
 		return true
+	}
+	
+	method comer(huevo){
+		
+	}
+	
+	method estaEnfermo(){
+		return false
+	}
+}
+
+object caceria{
+	
+	var huevosEscondidos = []
+	
+	
+	method huevosPorEncontrar(){
+		return huevosEscondidos.size()
+	}
+	
+	method esconderHuevo(unHuevo){
+		huevosEscondidos.add(unHuevo)
+	}
+	
+	method encontrarHuevo(chico,huevo){
+		chico.comer(huevo)
+		huevosEscondidos.remove(huevo)
+	}
+	
+	method encontrarPrimerHuevo(chico){
+		self.encontrarHuevo(chico,huevosEscondidos.first())
+	}
+	
+	method encontrarHuevosRestantes(chico){
+		huevosEscondidos.foreach({h=>self.encontrarHuevo(chico,h)})
 	}
 }
